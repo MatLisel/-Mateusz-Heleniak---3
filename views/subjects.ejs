@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Postępy w nauce</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1>Moje przedmioty</h1>
+
+  <form action="/add-subject" method="POST">
+    <input type="text" name="name" placeholder="Nazwa przedmiotu" required>
+    <button type="submit">Dodaj</button>
+  </form>
+
+  <% subjects.forEach(subject => { %>
+    <div class="subject">
+      <h2><%= subject.name %> (<%= subject.progress.length %> lekcji)</h2>
+
+      <form action="/edit-subject" method="POST" style="display:inline;">
+        <input type="hidden" name="id" value="<%= subject.id %>">
+        <input type="text" name="name" placeholder="Nowa nazwa" required>
+        <button type="submit">Zmień nazwę</button>
+      </form>
+
+      <form action="/delete-subject?_method=DELETE" method="POST" style="display:inline;">
+        <input type="hidden" name="id" value="<%= subject.id %>">
+        <button type="submit" onclick="return confirm('Usuń przedmiot?')">Usuń</button>
+      </form>
+
+      <ul>
+        <% subject.progress.forEach(p => { %>
+          <li>
+            <%= p.name %>
+            <form action="/delete-lesson?_method=DELETE" method="POST" style="display:inline;">
+              <input type="hidden" name="subjectId" value="<%= subject.id %>">
+              <input type="hidden" name="lessonId" value="<%= p.id %>">
+              <button type="submit">Usuń</button>
+            </form>
+          </li>
+        <% }) %>
+      </ul>
+
+      <form action="/add-lesson" method="POST">
+        <input type="hidden" name="id" value="<%= subject.id %>">
+        <input type="text" name="lesson" placeholder="Ukończona lekcja" required>
+        <button type="submit">Dodaj lekcję</button>
+      </form>
+    </div>
+  <% }) %>
+</body>
+</html>
