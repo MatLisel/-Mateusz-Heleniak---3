@@ -1,5 +1,3 @@
-let subjects = [];
-
 class Subject {
   constructor(name) {
     this.id = Date.now().toString();
@@ -20,4 +18,22 @@ class Subject {
   }
 }
 
-module.exports = { subjects, Subject };
+const subjects = [];
+
+const SubjectModel = {
+  getAll: () => subjects,
+
+  add: (name) => {
+    const newSubject = new Subject(name);
+    subjects.push(newSubject);
+  },
+
+  findById: (id) => subjects.find(s => s.id === id),
+
+  delete: (id) => {
+    const index = subjects.findIndex(s => s.id === id);
+    if (index !== -1) subjects.splice(index, 1);
+  }
+};
+
+module.exports = SubjectModel;
