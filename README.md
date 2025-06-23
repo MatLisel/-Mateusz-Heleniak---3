@@ -20,7 +20,7 @@ npm install
 Uruchom serwer:
 
 ```bash
-node app.js
+npm start
 ```
 
 Aplikacja dostępna będzie na `http://localhost:3000`.
