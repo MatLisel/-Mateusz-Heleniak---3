@@ -25,7 +25,7 @@
 
       <form action="/delete-subject?_method=DELETE" method="POST" style="display:inline;">
         <input type="hidden" name="id" value="<%= subject.id %>">
-        <button type="submit" onclick="return confirm('Usuń przedmiot?')">Usuń</button>
+        <button type="submit" onclick="confirmDelete(event, 'Na pewno usunąć przedmiot?')">Usuń</button>
       </form>
 
       <ul>
@@ -35,7 +35,7 @@
             <form action="/delete-lesson?_method=DELETE" method="POST" style="display:inline;">
               <input type="hidden" name="subjectId" value="<%= subject.id %>">
               <input type="hidden" name="lessonId" value="<%= p.id %>">
-              <button type="submit">Usuń</button>
+              <button type="submit" onclick="confirmDelete(event, 'Na pewno usunąć lekcję?')">Usuń</button>
             </form>
           </li>
         <% }) %>
@@ -48,5 +48,13 @@
       </form>
     </div>
   <% }) %>
+
+  <script>
+    function confirmDelete(event, message) {
+      if (!confirm(message)) {
+        event.preventDefault();
+      }
+    }
+  </script>
 </body>
 </html>
